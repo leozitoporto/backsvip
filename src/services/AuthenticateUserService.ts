@@ -1,6 +1,8 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 
+import { sign } from 'jsonwebtoken';
+
 import User from '../models/User';
 
 interface Request {
@@ -10,6 +12,7 @@ interface Request {
 
 interface Response {
   user: User;
+  token: string;
 }
 
 class AuthenticateUserService {
@@ -27,7 +30,13 @@ class AuthenticateUserService {
     if (!passwordMatched) {
       throw new Error('email/password incorretos.');
     }
-    return { user };
+
+    // palavra chave = mamãe é o topo do mundo
+    const token = sign({}, 'ac13eb306d8509ea3cd082963b4dc79e', {
+      subject: user.id,
+      expiresIn: '180d',
+    });
+    return { user, token };
   }
 }
 
