@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import appointmentsRouter from '@modules/appointments/infra/http/routes/appointments_routes';
+import providersRouter from '@modules/appointments/infra/http/routes/providers_routes';
 import usersRouter from '@modules/users/infra/http/routes/users_routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions_routes';
 import passwordRouter from '@modules/users/infra/http/routes/password_routes';
@@ -8,6 +9,7 @@ import profileRouter from '@modules/users/infra/http/routes/profile_routes';
 const routes = Router();
 
 routes.use('/appointments', appointmentsRouter);
+routes.use('/providers', providersRouter);
 routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/password', passwordRouter);
