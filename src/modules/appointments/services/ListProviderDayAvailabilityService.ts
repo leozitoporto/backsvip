@@ -1,59 +1,62 @@
 import { injectable, inject } from 'tsyringe';
-import { getDaysInMonth, getDate } from 'date-fns';
+import { getHours } from 'date-fns';
 
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 // import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   provider_id: string;
+  day: number;
   month: number;
   year: number;
 }
 
 type IResponse = Array<{
-  day: number;
+  hour: number;
   available: boolean;
 }>;
 
 @injectable()
-class ListProviderMonthAvailabilityService {
+class ListProviderDayAvailabilityService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
-  ) {}
+  ) { }
 
   public async execute({
     provider_id,
     year,
     month,
+    day,
   }: IRequest): Promise<IResponse> {
-    const appointments = await this.appointmentsRepository.findAllInMonthFromProvider(
+    const appointments = await this.appointmentsRepository.findAllInDayFromProvider(
       {
         provider_id,
         year,
         month,
+        day,
       },
     );
 
-    const nunberOfDaysInMonth = getDaysInMonth(new Date(year, month - 1));
+    const hourStart = 8;
 
-    const eachDayArray = Array.from(
-      { length: nunberOfDaysInMonth },
-      (_, index) => index + 1,
+    const eachHourStart = Array.from(
+      { length: 10 },
+      (_, index) => index + hourStart,
     );
 
-    const availability = eachDayArray.map(day => {
-      const appointmentsInDay = appointments.filter(appointment => {
-        return getDate(appointment.date) === day;
-      });
-
+    const availability = eachHourStart.map(hour => {
+      const hasAppointment = appointments.find(
+        appointment => getHours(appointment.date) === hour,
+      );
       return {
-        day,
-        available: appointmentsInDay.length < 10,
+        hour,
+        available: !hasAppointment,
       };
     });
+
     return availability;
   }
 }
 
-export default ListProviderMonthAvailabilityService;
+export default ListProviderDayAvailabilityService;
