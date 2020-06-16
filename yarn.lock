@@ -3959,6 +3959,11 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
+n@^6.5.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/n/-/n-6.5.1.tgz#57e736d39994e1f5cc49f09fbd143d1e7d82118d"
+  integrity sha512-CSDShHuBlYHfS5PR4BxwkZYNrDnc3B7GCRdAhSvnzl681Pd4Y4qOOTWQqjB8Cp6gYOIQI9qJxLK0Q1YI4xO2Kg==
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -5217,6 +5222,11 @@ sshpk@^1.7.0:
     jsbn "~0.1.0"
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
+
+stable@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/stable/-/stable-0.1.8.tgz#836eb3c8382fe2936feaf544631017ce7d47a3cf"
+  integrity sha512-ji9qxRnOVfcuLDySj9qzhGSEFVobyt1kIOSkj1qZzYLzq7Tos/oUUWvotUPQLlrsidqsK6tBH89Bc9kL5zHA6w==
 
 stack-utils@^2.0.2:
   version "2.0.2"
