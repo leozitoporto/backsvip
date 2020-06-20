@@ -1,5 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import AppError from '@shared/errors/AppError';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
@@ -20,7 +21,10 @@ class CreateUserService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-  ) {}
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
+  ) { }
 
   public async execute({ name, email, password }: IRequest): Promise<User> {
     const checkUserExists = await this.usersRepository.findByEmail(email);
@@ -36,6 +40,8 @@ class CreateUserService {
       email,
       password: hashedPassword,
     });
+
+    await this.cacheProvider.invalidatePrefix('providers-list');
 
     return user;
   }
